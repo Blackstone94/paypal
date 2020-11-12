@@ -1,8 +1,12 @@
 <?php
-    use Payal\Api\Payer;  
+
     if(!isset($_POST['producto'], $_POST['precio'])){
         exit('Ocurrio un error hola ');
     }
+
+    use PayPal\Api\Payer;  
+    use PayPal\Api\Item; 
+
     require 'configuracion.php';
 
     $producto=htmlspecialchars($_POST['producto']);
@@ -14,3 +18,11 @@
 
     $compra = new Payer();   
     $compra->setPaymentMethod('paypal');
+
+    $articulo = new Item();
+    $articulo->setName($producto)
+            ->setCurrency('MXN')
+            ->setQuantity(1)
+            ->setPrice($precio);
+
+    echo $articulo->getQuantity();      
